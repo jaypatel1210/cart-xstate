@@ -1,23 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText,
-  Button,
-  Spinner,
-} from 'reactstrap';
+import { Container, Row, Col, Button, Spinner } from 'reactstrap';
 import { useMachine } from '@xstate/react';
 import CartMachineContext from '../context/CartActorContext';
 import { CartItem } from '../types';
 import productsMachine from '../machine/products.machine';
-import { useEffect } from 'react';
+import { FunctionComponent, useEffect } from 'react';
+import Header from '../components/Header';
+import { ProductCardProps } from './components/ProductCard';
 
-const Products = () => {
+type ProductsProps = {
+  Product: FunctionComponent<ProductCardProps>;
+  colSize?: number;
+};
+
+const Products = ({ Product, colSize = 4 }: ProductsProps) => {
   const [state, productSend] = useMachine(productsMachine);
 
   const products = state.context.products;
@@ -65,32 +61,12 @@ const Products = () => {
 
   return (
     <Container fluid>
-      <h1 className="text-center text-success">Products</h1>
+      <Header title={<h1 className="text-center text-success">Products</h1>} />
+
       <Row>
         {products.map(product => (
-          <Col md={4} key={product.id}>
-            <Card className="mt-2 mb-1 border border-2">
-              <CardImg top height="250" width="100%" src={product.image} />
-              <CardBody className="text-center">
-                <CardTitle>{product.title}</CardTitle>
-                <CardText color="secondary">
-                  Price - ₹ {Math.round(product.price)}
-                </CardText>
-                <Button
-                  color="success"
-                  onClick={() =>
-                    handleAddToCart({
-                      id: `cart-${product.id}`,
-                      name: product.title,
-                      price: Math.round(product.price),
-                      image: product.image,
-                    })
-                  }
-                >
-                  Add To Cart
-                </Button>
-              </CardBody>
-            </Card>
+          <Col md={colSize} key={product.id}>
+            <Product product={product} handleAddToCart={handleAddToCart} />
           </Col>
         ))}
       </Row>

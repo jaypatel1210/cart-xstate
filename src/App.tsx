@@ -1,22 +1,15 @@
-import { Container, Row, Col } from 'reactstrap';
-import Products from './components/Products';
-import Cart from './components/Cart';
-import CartActorContext from './context/CartActorContext';
+import TemplateLoader from './components/TemplateLoader';
+import Template1 from './templates/Template1';
+// import Template2 from './templates/Template2';
 
 function App() {
   return (
-    <CartActorContext.Provider>
-      <Container fluid>
-        <Row>
-          <Col md="8">
-            <Products />
-          </Col>
-          <Col md="4">
-            <Cart />
-          </Col>
-        </Row>
-      </Container>
-    </CartActorContext.Provider>
+    <>
+      <TemplateLoader>
+        <Template1 />
+        {/* <Template2 /> */}
+      </TemplateLoader>
+    </>
   );
 }
 

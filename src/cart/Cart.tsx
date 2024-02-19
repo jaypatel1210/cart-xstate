@@ -1,9 +1,6 @@
 import {
   Container,
   ListGroup,
-  ListGroupItem,
-  Row,
-  Col,
   Button,
   Card,
   CardHeader,
@@ -11,8 +8,15 @@ import {
   CardFooter,
 } from 'reactstrap';
 import CartMachineContext from '../context/CartActorContext';
+import Header from '../components/Header';
+import { FunctionComponent } from 'react';
+import { CartItemProps } from './components/CartItem';
 
-const Cart = () => {
+type CartProps = {
+  CartItem: FunctionComponent<CartItemProps>;
+};
+
+const Cart = ({ CartItem }: CartProps) => {
   const cartItems = CartMachineContext.useSelector(
     state => state.context.items
   );
@@ -39,26 +43,14 @@ const Cart = () => {
 
   return (
     <Container fluid>
-      <h1 className="text-success">Your Cart</h1>
+      <Header title={<h1 className="text-success">Your Cart</h1>} />
       <ListGroup>
         {cartItems.map(item => (
-          <ListGroupItem key={item.id}>
-            <Row>
-              <Col>
-                <img height={80} src={item.image} alt="icon" />
-              </Col>
-              <Col className="text-center">
-                <div className="text-primary">{item.name}</div>
-                <span className="mr-2">Price - ₹{item.price}</span>
-                <Button
-                  color="danger"
-                  onClick={() => handleRemoveFromCart(item.id)}
-                >
-                  Delete
-                </Button>
-              </Col>
-            </Row>
-          </ListGroupItem>
+          <CartItem
+            key={item.id}
+            item={item}
+            handleRemoveFromCart={handleRemoveFromCart}
+          />
         ))}
       </ListGroup>
       {cartItems.length > 0 ? (
