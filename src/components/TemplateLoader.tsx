@@ -1,11 +1,18 @@
-import { ReactNode } from 'react';
+import { Suspense, lazy } from 'react';
+import { useParams } from 'react-router-dom';
 
-type TemplateLoaderProps = {
-  children: ReactNode;
-};
+const TemplateLoader = () => {
+  const { templateName } = useParams();
 
-const TemplateLoader = ({ children }: TemplateLoaderProps) => {
-  return <div className="template-loader">{children}</div>;
+  const TemplateC = lazy(() => import(`../templates/${templateName}`));
+
+  return (
+    <div className="template-loader">
+      <Suspense fallback={<div>Loading...</div>}>
+        <TemplateC />
+      </Suspense>
+    </div>
+  );
 };
 
 export default TemplateLoader;

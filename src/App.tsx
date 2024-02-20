@@ -1,15 +1,14 @@
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import TemplateLoader from './components/TemplateLoader';
-import Template1 from './templates/Template1';
-// import Template2 from './templates/Template2';
 
 function App() {
   return (
-    <>
-      <TemplateLoader>
-        <Template1 />
-        {/* <Template2 /> */}
-      </TemplateLoader>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Outlet />} />
+        <Route path="/:templateName" element={<TemplateLoader />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
