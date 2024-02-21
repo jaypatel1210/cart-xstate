@@ -7,6 +7,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Outlet />} />
         <Route path="/:templateName" element={<TemplateLoader />} />
+        <Route path="/test" element={<div>Test</div>} />
       </Routes>
     </BrowserRouter>
   );
