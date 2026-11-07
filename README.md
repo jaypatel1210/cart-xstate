@@ -1,30 +1,20 @@
-# React + TypeScript + Vite
+# cart-xstate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A shopping cart in React and TypeScript with its state modeled as XState v5 machines. The cart moves between `empty` and `notEmpty` states, and products have their own machine.
 
-Currently, two official plugins are available:
+Pages load as lazy templates from the URL, so `/Template1` and `/Template2` render the same cart logic with different interfaces.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Run it
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Then open `http://localhost:5173/Template1`.
+
+## Where things are
+
+- `src/machine/`: the cart and product state machines
+- `src/context/CartActorContext.tsx`: shares the cart actor with components
+- `src/templates/`: the two page templates
